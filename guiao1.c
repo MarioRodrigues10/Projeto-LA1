@@ -13,7 +13,7 @@ int Exponent(int a,int b){
     }
     return total;
 }
-int XOR(int a, int b){
+int Xor(int a, int b){
     int res = 0;
  
     for (int i = 31; i >= 0; i--)
@@ -32,7 +32,15 @@ int XOR(int a, int b){
 int Incrementar(int a){ return (a+1);}
 int Decrementar(int a){ return (a-1);}
 int Modulo(int a){ return abs(a);  }
-
+int And(int a, int b){
+    return a&b;
+}
+int Or(int a, int b){
+    return a|b;
+}
+int Not(int a){
+    return ~a;
+}
 int DoFunction(int Select, int a, int b)
 {
     typedef int (*MyFunctionPointer)(int a, int b);
@@ -45,7 +53,9 @@ int DoFunction(int Select, int a, int b)
             Multiply,
             Divide,
             Exponent,
-            XOR
+            Xor,
+            And,
+            Or
         };
 
     //  Dispatch para a função requesitada.
@@ -62,6 +72,7 @@ int DoFunction2(int Select, int a)
             Incrementar,
             Decrementar,
             Modulo,
+            Not
         };
 
     //  Dispatch para a função requesitada.
@@ -81,6 +92,9 @@ int main(void)
     printf("Decrementar 7 = %d\n",DoFunction2(1,7));
     printf("Modulo (-7) = %d\n",DoFunction2(2,-7));
     printf("XOR 2 5 = %d\n",DoFunction(5,2,5));
+    printf("AND 2 5 = %d\n",DoFunction(6,2,5));
+    printf("OR 2 5 = %d\n",DoFunction(7,2,5));
+    printf("~A = %d\n",DoFunction2(3,2));
 
     // E , OU , NOT  -> To Do
     // 2 & 5 = 0
