@@ -1,0 +1,12 @@
+int adicionar(STACK *s);
+int sub(STACK *s);
+int expoente(STACK *s);
+int multiply(STACK *s);
+int divisao(STACK *s);
+int dec(STACK *s);
+int inc(STACK *s);
+int modulo(STACK *s);
+int and(STACK *s);
+int or(STACK *s);
+int xor(STACK *s);
+int not(STACK *s);
