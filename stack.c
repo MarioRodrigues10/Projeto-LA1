@@ -7,23 +7,24 @@
  * @brief cria uma nova stack
  * @return devolve uma nova stack
 */
-STACK *new_stack(){
-	STACK *s = (STACK *) calloc(1, sizeof(STACK));
-	s->tamanho = 10000;
-	s->stack = (int *) calloc(s->tamanho, sizeof(int));
-	return s;
+STACK *stack_new(){
+	STACK *stack2 = (STACK *) calloc(1, sizeof(STACK));
+	stack2->tamanho = BUFSIZ;
+	stack2->stack = (int *) calloc(stack2->tamanho, sizeof(int));
+	return stack2;
 }
+
 /**
  * \brief A função push recebe uma stack e um inteiro, e adiciona esse inteiro na stack.
  * @param s stack
  * @param valor inteiro a ser adicionado
  */
-void push(STACK *s, int elem){
-	if(s->tamanho == s->numeroelems){
-		s->tamanho += 200;
+void push(STACK *s, int valor){
+	if(s->numeroelems == s->tamanho){
+		s->tamanho *= 2;
 		s->stack = (int *) realloc(s->stack, s->tamanho * sizeof(int));
 	}
-	s->stack[s->numeroelems] = elem;
+	s->stack[s->numeroelems] = valor;
 	s->numeroelems++;
 }
 

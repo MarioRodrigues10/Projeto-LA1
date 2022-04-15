@@ -8,7 +8,7 @@ typedef struct stack{
 	int numeroelems;	/**< Numero de elementos ao momento na stack */
 } STACK;
 
-STACK *new_stack();
+STACK *stack_new();
 void push(STACK *s, int elem);
 int pop(STACK *s);
 void printStack(STACK *s);
