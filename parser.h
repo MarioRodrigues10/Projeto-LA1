@@ -4,17 +4,6 @@
 * @param s Passagem da stack como parâmetro
 * @param line Linha a ser lida.
 */
-void parser(STACK *s,char *linha);
-
-
-
-/**
- * \brief A função splitStrings recebe uma string e um delimitador, e devolve um array de strings.
- * @param str string a ser dividida
- * @param delim delimitador da string
- * @return devolve um array de strings
- */
-char* splitStrings(char *str, const char *delim);
-
+void parse_line(STACK *s);
 
 

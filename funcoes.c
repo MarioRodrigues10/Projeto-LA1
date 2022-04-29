@@ -1,112 +1,171 @@
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <assert.h>
 #include "stack.h"
 #include "parser.h"
+#include "funcoesStack.h"
+
+/**Macro usada para calcular o tipo do elemento que vai ser colocado na stack. */
+#define MAX(a,b) (((a)>(b)) ? (a):(b))
 
 /**
- * @brief adiciona dois elementos e coloca a soma na stack
+ * @brief transforma qualquer elemento da stack em double
+ * @param elemento elemento a ser convertido
+ * @return devolve uma nova stack
+ */
+double toDouble(DATA elemento){
+	if(elemento.type == DOUBLE){
+		return elemento.DOUBLE;
+	}
+	else if(elemento.type == LONG){
+		return elemento.LONG;
+	}
+	else if(elemento.type == CHAR){
+		return elemento.CHAR;
+	}
+	else{
+		return 0;
+	}
+	return 0;
+}
+
+
+/**
+ * @brief Soma os 2 valores que estão no topo da stack
  * @param s stack
  */
-void adicionar(STACK *s){
-    int num1 = pop(s);
-    int num2 = pop(s);
-    push(s, num1+num2);
-} 
+void adicionar(STACK *s) {             
+  	DATA x = pop(s);
+  	DATA y = pop(s);
+	double tx = toDouble(x);
+	double ty = toDouble(y);
+	converte_Puxa(s, ty+tx, MAX(x.type, y.type));
+}
+
 /**
- * @brief subtrai dois elementos e coloca a subtração na stack
+ * @brief Subtrai os 2 valores que estão no topo da stack
  * @param s stack
  */
-void sub(STACK *s){
-    int num1 = pop(s);
-    int num2 = pop(s);
-    push(s, num2-num1);
+void sub(STACK *s) {             
+  	DATA x = pop(s);
+  	DATA y = pop(s);
+	double tx = toDouble(x);
+	double ty = toDouble(y);
+	converte_Puxa(s, ty-tx, MAX(x.type,y.type));
 }
+
 /**
- * @brief eleva o 2 elemento da stack ao primeiro e coloca o resultado na stack
- * @param s 
- */
-void expoente(STACK *s){
-    int num1 = pop(s);
-    int num2 = pop(s);
-    push(s, pow(num2,num1));
-}
-/**
- * @brief multiplica dois elementos e coloca a multiplicação na stack
+ * @brief Multiplica os 2 valores que estão no topo da stack
  * @param s stack
  */
-void multiply(STACK *s){
-    int num1 = pop(s);
-    int num2 = pop(s);
-    push(s, num2*num1);
-    
+void multiply(STACK *s) {             
+  	DATA x = pop(s);
+  	DATA y = pop(s);
+  	double tx = toDouble(x);
+	double ty = toDouble(y);
+	converte_Puxa(s, ty*tx, MAX(x.type,y.type));
 }
+
 /**
- * @brief divide dois elementos e coloca a divisão na stack
+ * @brief Divide os 2 valores que estão no topo da stack
  * @param s stack
  */
-void divisao(STACK *s){
-    int num1 = pop(s);
-    int num2 = pop(s);
-    push(s, num2/num1);
+void divisao(STACK *s) {                                      
+    DATA x = pop(s);                                     
+    DATA y = pop(s);                                     
+    double tx = toDouble(x);
+	double ty = toDouble(y);
+	converte_Puxa(s, ty/tx, MAX(x.type,y.type));                                           
+  	
 }
+
 /**
- * @brief retira 1 ao elemento no topo da stack e volta a colocar-lo no topo da stack
+ * @brief Calcula o resto entre os 2 valores que estão no topo da stack
  * @param s stack
  */
-void dec(STACK *s){
-    int num1 = pop(s)-1;
-    push(s, num1);
+void modulo(STACK *s)  {                                 
+    DATA x = pop(s);                                
+    DATA y = pop(s);                                
+	long tx = toDouble(x);
+	long ty = toDouble(y);
+	converte_Puxa(s, ty%tx, MAX(x.type,y.type));
 }
 /**
- * @brief adiciona 1 ao elemento no topo da stack e volta a colocar-lo no topo da stack
+ * @brief Coloca o 2º valor do topo da stack elevado ao 1º valor do topo da stack
+ * @param s stack
+ */
+void expoente(STACK *s) {             
+  	DATA x = pop(s);
+  	DATA y = pop(s);
+	double tx = toDouble(x);
+	double ty = toDouble(y);
+	converte_Puxa(s, pow(ty, tx), MAX(x.type,y.type));
+}
+
+/**
+ * @brief Incrementa o valor que está no topo da stack
  * @param s stack
  */
 void inc(STACK *s){
-    int num1 = pop(s)+1;
-    push(s, num1);
+	DATA x = pop(s);
+	double tx = toDouble(x);
+	converte_Puxa(s, tx+1, x.type);
 }
+
 /**
- * @brief coloca o elemento no topo da stack em módulo e volta a colocar-lo no topo do stack
+ * @brief Decrementa o valor que está no topo da stack
  * @param s stack
  */
-void modulo(STACK *s){
-    int num1 = pop(s);
-    int num2 = pop(s);
-    push(s, num2 % num1);
+void dec(STACK *s){
+	DATA x = pop(s);
+	double tx = toDouble(x);
+	converte_Puxa(s, tx-1, x.type);	
 }
+
 /**
- * @brief faz a operação and entre dois elementos e coloca o resultado na stack
+ * @brief Calcula o valor lógico do AND entre os 2 valores que estão no topo da stack
  * @param s stack
  */
-void and(STACK *s){
-    int num1 = pop(s);
-    int num2 = pop(s);
-    push(s, num2 & num1);
+void and(STACK *s) {                              
+    DATA x = pop(s);                                
+    DATA y = pop(s);                                
+   	long tx = toDouble(x);
+	long ty = toDouble(y);
+	converte_Puxa(s, tx&ty, MAX(x.type,y.type));
 }
+
 /**
- * @brief faz a operação or entre dois elementos e coloca o resultado na stack
+ * @brief Calcula o valor lógico do OR entre os 2 valores que estão no topo da stack
  * @param s stack
  */
-void or(STACK *s){
-    int num1 = pop(s);
-    int num2 = pop(s);
-    push(s, num2 | num1);
+void xor(STACK *s)  {                                   
+    DATA x = pop(s);                                
+    DATA y = pop(s);                                
+    long tx = toDouble(x);
+	long ty = toDouble(y);
+	converte_Puxa(s, tx^ty, MAX(x.type, y.type));           
 }
+
 /**
- * @brief faz a operação xor entre dois elementos e coloca o resultado na stack
+ * @brief Calcula o valor lógico de NOT do elemento no topo da stack
  * @param s stack
  */
-void xor(STACK *s){
-    int num1 = pop(s);
-    int num2 = pop(s);
-    push(s, num2 ^ num1);
+void not(STACK *s){                                   
+    DATA x = pop(s);                                
+	long tx = toDouble(x);
+	converte_Puxa(s, ~tx, x.type);
 }
+
 /**
- * @brief faz a operação not entre dois elementos e coloca o resultado na stack
+ * @brief Calcula o valor lógico do OR entre os 2 valores que estão no topo da stack
  * @param s stack
  */
-void not(STACK *s){
-    int num1 = pop(s);
-    push(s, ~ num1);
+void or(STACK *s){                                   
+    DATA x = pop(s);                                
+    DATA y = pop(s);                                
+	long tx = toDouble(x);
+	long ty = toDouble(y);
+	converte_Puxa(s, tx|ty, MAX(x.type,y.type));
 }
+

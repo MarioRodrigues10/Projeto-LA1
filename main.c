@@ -6,16 +6,15 @@
 
 #include "stack.h"
 #include "parser.h"
-
-
+#include "variaveis.h"
 /**
- * @brief lê uma linha, cria uma nova stack, e chama a função parser que calcula o resultado entre números inteiros
+ * @brief cria uma nova stack, e devolve a stack criada para a função parser. No fim da execução imprime o conteúdo da stack
  * @return 0 se não houver erros
 */
 int main(){
-    char line[10000];
-    assert(fgets(line,10000,stdin) != NULL);
     STACK *s = stack_new();
-    parser(s, line);
+    iniciarArray(s);
+    parse_line(s);
+    printStack(s);
     return 0;
 }
