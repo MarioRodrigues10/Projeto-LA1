@@ -14,7 +14,11 @@
 int main(){
     STACK *s = stack_new();
     iniciarArray(s);
-    parse_line(s);
+    char line[10000];
+    if(fgets(line, 10000, stdin) != (char *) NULL){
+        parse_line(s, line);
+    }
     printStack(s);
+    printf("\n");
     return 0;
 }

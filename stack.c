@@ -19,7 +19,7 @@ int has_type(DATA elem, int mask) {
  */
 STACK *stack_new(){
 	STACK *stack2 = (STACK *) calloc(1, sizeof(STACK));
-	stack2->tamanho = BUFSIZ;
+	stack2->tamanho = 10000;
 	stack2->stack = (DATA *) calloc(stack2->tamanho, sizeof(DATA));
 	return stack2;
 }
@@ -33,7 +33,7 @@ STACK *stack_new(){
  */
 void push(STACK *s, DATA valor){
 	if(s->numeroelems == s->tamanho){
-		s->tamanho += 100;
+		s->tamanho += 200;
 		s->stack = (DATA *) realloc(s->stack, s->tamanho * sizeof(DATA));
 	}
 	s->stack[s->numeroelems] = valor;
@@ -54,7 +54,7 @@ DATA pop(STACK *s){
  * @param s stack
  */
 void printStack(STACK *s){
-		for(int i = 0; i < s -> numeroelems; i++){
+	for(int i = 0; i < s -> numeroelems; i++){
 			DATA elem = s->stack[i];
 			TYPE type = elem.type;
 			if(type == LONG){
@@ -64,13 +64,21 @@ void printStack(STACK *s){
 				printf("%g", elem.DOUBLE);
 			}
 			else if(type == CHAR){
-				printf("%c", elem.CHAR);
+				if(elem.CHAR == '\n'){
+					printf("\n");
+				}
+				else printf("%c", elem.CHAR);
 			}
 			else if(type == STRING){
 				printf("%s", elem.STRING);
 			}
-		}
-		printf("\n");
+			else if(type == ARRAYS){
+				printStack(elem.ARRAYS);
+			}
+			else if(type == BLOCKS){
+				printf("%s", elem.BLOCKS);
+			}
+	}
 }
 
 
@@ -114,3 +122,38 @@ DATA converte(double valor, TYPE tipo){
 	}
     return elemento;
 }
+
+
+DATA top(STACK *s){
+	return s->stack[s->numeroelems -1];
+}
+
+
+DATA penultimo(STACK *s){
+	return s->stack[s->numeroelems -2];
+}
+
+
+
+#define STACK_OPERATION(_type, _name)			\
+	void push_##_name(STACK *s, _type val){ 	\
+		DATA elem;								\
+		elem.type = _name;						\
+		elem._name = val;						\
+		push(s, elem);							\
+	}											\
+	_type pop_##_name(STACK *s){				\
+		DATA elem = pop(s); 					\
+		assert(elem.type == _name);				\
+		return elem._name;						\
+	}
+
+/**
+* \brief Protótipos para a macro.
+*/
+STACK_OPERATION(long, LONG)
+STACK_OPERATION(double, DOUBLE)
+STACK_OPERATION(char, CHAR)
+STACK_OPERATION(char *, STRING)
+STACK_OPERATION(struct stack *, ARRAYS)
+STACK_OPERATION(char *, BLOCKS)

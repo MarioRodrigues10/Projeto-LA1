@@ -23,7 +23,7 @@ void converteCHAR(STACK *s);
  */
 void lerLinha(STACK *s);
 
-
+void lertudo(STACK *s);
 /**
  * @brief troca os 2 elementos do topo da stack
  * @param s stack

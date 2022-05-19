@@ -77,3 +77,4 @@ void not(STACK *s);
  * @return devolve uma nova stack
  */
 double toDouble(DATA elemento);
+

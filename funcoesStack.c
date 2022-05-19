@@ -4,6 +4,7 @@
 #include <assert.h>
 #include <math.h>
 #include <string.h>
+#include <ctype.h>
 
 #include "stack.h"
 #include "parser.h"
@@ -30,7 +31,7 @@ void converteInt(STACK *s) {
     } 
     else if(has_type(x,LONG)){
         push(s,x);
-    }  
+    } 
 }
 
 /**
@@ -72,18 +73,52 @@ void converteCHAR(STACK *s){
  * @param s stack
  */
 void lerLinha(STACK *s){
-   parse_line(s);
+    char line[10240];
+    assert(fgets(line, 10240, stdin) != NULL);
+
+    if(isdigit(line[0])){ 
+        parse_line(s,line);
+    }
+    else{
+        char *input = malloc(sizeof(char)*(strlen(line)+1));
+        strcpy(input, line);
+        input[strlen(input)] = '\0';
+        push_STRING(s, input);
+    }
 }
+void lertudo(STACK *s){
+    char *input = malloc(sizeof(char) * 10240);
+    char c;
+    int i = 0;
+    while((c = getchar()) != EOF) {
+        input[i] = c;
+        i++;
+    }
+    input[i+1] = '\0';
+    push_STRING(s, input);
+}
+
 
 /**
  * @brief troca os 2 elementos do topo da stack
  * @param s stack
  */
 void trocar(STACK *s){
-    DATA num1 = pop(s);
-    DATA num2 = pop(s);
-    push(s, num1);
-    push(s, num2);
+    if(has_type(top(s),CHAR) && has_type(penultimo(s),STRING)){
+        char x = pop_CHAR(s);
+        char *y = pop_STRING(s);
+        push_CHAR(s,x);
+        push_STRING(s,y);
+
+    }
+
+    else{
+        DATA num1 = pop(s);
+        DATA num2 = pop(s);
+        push(s, num1);
+        push(s, num2);
+        printf("fiz isto\n");
+    }
 }
 
 /**
@@ -91,9 +126,18 @@ void trocar(STACK *s){
  * @param s stack
  */
 void duplicar(STACK *s){
-    DATA num1 = pop(s);
-    push(s, num1);
-    push(s, num1);
+    if(has_type(top(s),STRING)){
+        char* x = pop_STRING(s);
+        char* linhas = malloc(sizeof(char)*BUFSIZ);
+        strcpy(linhas,x);
+        push_STRING(s,x);
+        push_STRING(s,linhas);
+    }
+    else{
+        DATA num1 = pop(s);
+        push(s, num1);
+        push(s, num1);
+    }
 }
 
 /**

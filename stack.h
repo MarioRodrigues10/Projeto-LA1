@@ -6,7 +6,9 @@ typedef enum {
 	LONG = 1,	/**< Tipo Long com o valor 1 (2⁰) associado */
 	DOUBLE = 2, /**< Tipo Double com o valor 2 (2¹) associado */
 	CHAR = 4, 	/**< Tipo Char com o valor 4 (2²) associado */
-	STRING = 8	/**< Tipo String com o valor 8 (2³) associado */
+	STRING = 8,	/**< Tipo String com o valor 8 (2³) associado */
+	ARRAYS = 16,/**< Tipo Array com o valor 16 (2⁴) associado */
+	BLOCKS = 32	/**< Tipo Bloco com o valor 32 (2⁵) associado */
 } TYPE;
 
 /**
@@ -19,7 +21,8 @@ typedef struct data {
 	double DOUBLE;	/**< Tipo double */
 	char CHAR;		/**< Tipo char */
 	char *STRING;	/**< Tipo string */
-
+	struct stack *ARRAYS;	/**< Tipo array */
+	char *BLOCKS;	/**< Tipo bloco */
 } DATA;
 
 /**
@@ -80,3 +83,18 @@ void converte_Puxa(STACK *s, double valor, TYPE tipo);
  * @return valor convertido com tipo DATA
  */
 DATA converte(double valor, TYPE tipo);
+DATA top(STACK *s);
+DATA penultimo(STACK *s);
+
+#define STACK_OPERATION_PROTO(_type, _name)		\
+	void push_##_name(STACK *s, _type val);		\
+	_type pop_##_name(STACK *s);
+
+
+STACK_OPERATION_PROTO(long, LONG)
+STACK_OPERATION_PROTO(double, DOUBLE)
+STACK_OPERATION_PROTO(char, CHAR)
+STACK_OPERATION_PROTO(char *, STRING)
+STACK_OPERATION_PROTO(struct stack *, ARRAYS)
+STACK_OPERATION_PROTO(char *, BLOCKS)
+

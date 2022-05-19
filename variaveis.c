@@ -75,6 +75,36 @@ void varE(STACK *s){
  */
 void varF(STACK *s){
     push(s, s->letras[5]);
+
+}
+
+void varG(STACK *s){
+    push(s, s->letras[6]);
+
+}
+
+void varH(STACK *s){
+    push(s, s->letras[7]);
+}
+
+void varI(STACK *s){
+    push(s, s->letras[8]);
+}
+
+void varJ(STACK *s){
+    push(s, s->letras[9]);
+}
+
+void varK(STACK *s){
+    push(s, s->letras[10]);
+}
+
+void varL(STACK *s){
+    push(s, s->letras[11]);
+}
+
+void varM(STACK *s){
+    push(s, s->letras[12]);
 }
 
 /**
@@ -85,12 +115,91 @@ void varN(STACK *s){
     push(s, s->letras[13]);
 }
 
+void varO(STACK *s){
+    push(s, s->letras[14]);
+}
+
+void varP(STACK *s){
+    push(s, s->letras[15]);
+}
+
+void varQ(STACK *s){
+    push(s, s->letras[16]);
+}
+
+void varR(STACK *s){
+    push(s, s->letras[17]);
+}
+
 /**
  * @brief função responsável por colocar o conteúdo da variável S na stack
  * @param s 
  */
 void varS(STACK *s){
-    push(s, s->letras[18]);
+    if (has_type(top(s),ARRAYS)){
+        struct stack *a = pop_ARRAYS(s);
+        int i = 0;
+        DATA x[1000];
+        while(a->numeroelems > 0){
+            x[i] = pop(a);
+            i++;
+        }
+        for(int j = i; j > 0; j--){
+            push(a, x[j-1]);
+            push(a, s->letras[18]);
+        }
+        push_ARRAYS(s, a);
+    }
+
+    else push(s, s->letras[18]);
+}
+
+void varT(STACK *s){
+    if (has_type(top(s),ARRAYS)){
+        printf("entrei2\n");
+        struct stack *a = pop_ARRAYS(s);
+        int i = 0;
+        DATA x[1000];
+        while(a->numeroelems > 0){
+            x[i] = pop(a);
+            i++;
+        }
+        for(int j = i; j > 0; j--){
+            push(a, x[j-1]);
+            push(a, s->letras[18]);
+        }
+        push_ARRAYS(s, a);
+    }
+    else push(s, s->letras[19]);
+}
+
+void varU(STACK *s){
+    push(s, s->letras[20]);
+}
+
+void varV(STACK *s){
+    if (has_type(top(s),ARRAYS)){
+        printf("entrei2\n");
+        struct stack *a = pop_ARRAYS(s);
+        int i = 0;
+        DATA x[1000];
+        while(a->numeroelems > 0){
+            x[i] = pop(a);
+            i++;
+        }
+        for(int j = i; j > 0; j--){
+            push(a, x[j-1]);
+            push(a, s->letras[21]);
+        }
+        printStack(a);
+        printf("\n");
+        push_ARRAYS(s, a);
+    }
+    else push(s, s->letras[21]);
+}
+
+void varW(STACK *s){
+    push(s, s->letras[22]);
 }
 
 /**
@@ -116,3 +225,4 @@ void varY(STACK *s){
 void varZ(STACK *s){
     push(s, s->letras[25]);
 }
+

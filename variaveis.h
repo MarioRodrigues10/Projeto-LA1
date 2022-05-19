@@ -69,3 +69,20 @@ void varY(STACK *s);
  * @param s 
  */
 void varZ(STACK *s);
+
+void varG(STACK *s);
+void varH(STACK *s);
+void varI(STACK *s);
+void varJ(STACK *s);
+void varK(STACK *s);
+void varL(STACK *s);
+void varM(STACK *s);
+void varO(STACK *s);
+void varP(STACK *s);
+void varQ(STACK *s);
+void varR(STACK *s);
+void varS(STACK *s);
+void varT(STACK *s);
+void varU(STACK *s);
+void varV(STACK *s);
+void varW(STACK *s);
